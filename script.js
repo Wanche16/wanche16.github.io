@@ -1,5 +1,5 @@
 /* ==========================================================
-   Undangan Pernikahan — Anke & Iwan
+   Undangan Pernikahan — Keana & Wanche
    ========================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
      undangan berjalan dalam mode offline: ucapan hanya tampil
      di browser pengirim dan kunjungan tidak tercatat.
      ============================================================ */
-  const API_URL = "https://script.google.com/macros/s/AKfycbyznEge1f5rSdBlXJ14qvJdX4zozzd7_OkMNF7QHcyx4pBKGQ15xJ_GZRnDIw78XLGhGQ/exec"; // contoh: "https://script.google.com/macros/s/XXXX/exec"
+  const API_URL = "https://script.google.com/macros/s/AKfycbyQSinOHX_f0dUxoS_a33l6JQAGqxk2cLlTbZ24ZWmiuoiy7WuwJ17NXsEKNMVAaF6icQ/exec"; // contoh: "https://script.google.com/macros/s/XXXX/exec"
 
   /* ---------- 1. Nama tamu dari URL (?to=Nama+Tamu) ---------- */
   const params = new URLSearchParams(window.location.search);

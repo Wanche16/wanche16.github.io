@@ -3,6 +3,15 @@
    ========================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
+  /* ============================================================
+     KONFIGURASI BACKEND (Google Apps Script)
+     Ikuti langkah di file apps-script.gs, lalu tempel
+     "Web app URL" hasil deploy di sini. Selama masih kosong,
+     undangan berjalan dalam mode offline: ucapan hanya tampil
+     di browser pengirim dan kunjungan tidak tercatat.
+     ============================================================ */
+  const API_URL = "https://script.google.com/macros/s/AKfycbyznEge1f5rSdBlXJ14qvJdX4zozzd7_OkMNF7QHcyx4pBKGQ15xJ_GZRnDIw78XLGhGQ/exec"; // contoh: "https://script.google.com/macros/s/XXXX/exec"
+
   /* ---------- 1. Nama tamu dari URL (?to=Nama+Tamu) ---------- */
   const params = new URLSearchParams(window.location.search);
   const guest = params.get("to");
@@ -27,7 +36,22 @@ document.addEventListener("DOMContentLoaded", () => {
     // mulai musik — klik tombol ini adalah "user gesture" yang
     // disyaratkan browser sebelum audio boleh diputar
     startMusic();
+    // catat kunjungan ke spreadsheet (jika backend sudah dipasang)
+    logVisit();
   });
+
+  function logVisit() {
+    if (!API_URL) return;
+    // body dikirim tanpa header khusus agar tidak memicu CORS preflight
+    fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        action: "visit",
+        guest: guest ? decodeURIComponent(guest.replace(/\+/g, " ")) : "",
+        device: navigator.userAgent.slice(0, 120),
+      }),
+    }).catch(() => {}); // gagal mencatat tidak boleh mengganggu tamu
+  }
 
   /* ---------- 2b. Musik latar ---------- */
   const music = document.getElementById("bgMusic");
@@ -166,22 +190,23 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* ---------- 8. Ucapan & konfirmasi kehadiran ----------
-     CATATAN: daftar ucapan ini hanya tersimpan di memori browser
-     pengunjung (hilang saat halaman di-refresh). Untuk menyimpan
-     ucapan dari semua tamu, sambungkan fungsi submitWish() ke
-     backend/API (mis. Google Apps Script, Firebase, atau Supabase). */
-  const wishes = [];
+     Jika API_URL terisi: ucapan dikirim & dimuat dari Google Sheets,
+     sehingga semua tamu bisa saling melihat.
+     Jika API_URL kosong: mode offline — ucapan hanya tampil di
+     browser pengirim dan hilang saat halaman di-refresh. */
+  let wishes = [];
   const wishList = document.getElementById("wishList");
   const wishHint = document.getElementById("wishHint");
+  const wishSubmitBtn = document.getElementById("wishSubmit");
 
   function renderWishes() {
     wishList.innerHTML = wishes
       .map(
         (w) => `
         <li>
-          <span class="who">${escapeHtml(w.name)}</span>
-          <span class="status">${escapeHtml(w.attend)}</span>
-          <p class="msg">${escapeHtml(w.message)}</p>
+          <span class="who">${escapeHtml(String(w.name || ""))}</span>
+          <span class="status">${escapeHtml(String(w.attend || ""))}</span>
+          <p class="msg">${escapeHtml(String(w.message || ""))}</p>
         </li>`
       )
       .join("");
@@ -197,7 +222,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }[c]));
   }
 
-  document.getElementById("wishSubmit").addEventListener("click", () => {
+  // muat ucapan yang sudah ada dari spreadsheet
+  async function loadWishes() {
+    if (!API_URL) return;
+    try {
+      const res = await fetch(API_URL);
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        wishes = data;
+        renderWishes();
+      }
+    } catch {
+      /* biarkan kosong bila gagal; tidak mengganggu tamu */
+    }
+  }
+  loadWishes();
+
+  wishSubmitBtn.addEventListener("click", async () => {
     const name = document.getElementById("wishName").value.trim();
     const attend = document.getElementById("wishAttend").value;
     const message = document.getElementById("wishMessage").value.trim();
@@ -205,6 +246,21 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!name || !message) {
       wishHint.textContent = "Mohon isi nama dan ucapan terlebih dahulu.";
       return;
+    }
+
+    // kirim ke spreadsheet bila backend terpasang
+    if (API_URL) {
+      wishSubmitBtn.disabled = true;
+      wishHint.textContent = "Mengirim...";
+      try {
+        await fetch(API_URL, {
+          method: "POST",
+          body: JSON.stringify({ action: "wish", name, attend, message }),
+        });
+      } catch {
+        /* tetap tampilkan secara lokal walau pengiriman gagal */
+      }
+      wishSubmitBtn.disabled = false;
     }
 
     wishes.unshift({ name, attend, message });

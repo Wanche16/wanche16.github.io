@@ -20,25 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
       decodeURIComponent(guest.replace(/\+/g, " "));
   }
 
-  /* ---------- 2. Buka undangan ---------- */
-  const cover = document.getElementById("cover");
-  const main = document.getElementById("mainContent");
-  const openBtn = document.getElementById("openBtn");
-
-  document.body.classList.add("locked");
-
-  openBtn.addEventListener("click", () => {
-    cover.classList.add("is-open");
-    document.body.classList.remove("locked");
-    main.setAttribute("aria-hidden", "false");
-    // paksa cek elemen reveal yang sudah terlihat
-    revealCheck();
-    // mulai musik — klik tombol ini adalah "user gesture" yang
-    // disyaratkan browser sebelum audio boleh diputar
-    startMusic();
-    // catat kunjungan ke spreadsheet (jika backend sudah dipasang)
-    logVisit();
-  });
+  /* ---------- 2. Halaman langsung terbuka (tanpa tombol) ---------- */
+  // catat kunjungan begitu halaman dimuat
+  logVisit();
 
   function logVisit() {
     if (!API_URL) return;
@@ -53,9 +37,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }).catch(() => {}); // gagal mencatat tidak boleh mengganggu tamu
   }
 
-  /* ---------- 2b. Musik latar ---------- */
+  /* ---------- 2b. Musik latar ----------
+     Browser memblokir autoplay audio tanpa interaksi pengguna.
+     Karena tombol "Buka Undangan" sudah dihapus, musik dicoba
+     diputar pada interaksi pertama tamu (sentuh/scroll/klik),
+     dan tombol musik langsung terlihat sejak awal. */
   const music = document.getElementById("bgMusic");
   const musicToggle = document.getElementById("musicToggle");
+  musicToggle.hidden = false;
 
   function setMusicUI(playing) {
     musicToggle.classList.toggle("is-playing", playing);
@@ -65,14 +54,31 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  function startMusic() {
+  // hanya event ini yang dihitung browser sebagai "user activation"
+  // (scroll/wheel TIDAK dihitung, jadi tidak dipakai)
+  const gestureEvents = ["pointerdown", "keydown", "touchend"];
+
+  function tryAutoplay(e) {
+    // abaikan gesture pada tombol musik sendiri agar tidak
+    // bentrok dengan handler klik putar/jeda di bawah
+    if (e && e.target && musicToggle.contains(e.target)) return;
     music.volume = 0.7;
     music
       .play()
-      .then(() => setMusicUI(true))
-      .catch(() => setMusicUI(false)); // jika browser tetap memblokir
-    musicToggle.hidden = false;
+      .then(() => {
+        setMusicUI(true);
+        stopAutoplayAttempts(); // berhasil — berhenti mencoba
+      })
+      .catch(() => {}); // gagal — biarkan, akan dicoba di gesture berikutnya
   }
+
+  function stopAutoplayAttempts() {
+    gestureEvents.forEach((ev) => window.removeEventListener(ev, tryAutoplay));
+  }
+
+  gestureEvents.forEach((ev) =>
+    window.addEventListener(ev, tryAutoplay, { passive: true })
+  );
 
   musicToggle.addEventListener("click", () => {
     if (music.paused) {
@@ -80,6 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       music.pause();
       setMusicUI(false);
+      // tamu memilih jeda — jangan nyalakan lagi lewat autoplay
+      stopAutoplayAttempts();
     }
   });
 
@@ -152,13 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
     { threshold: 0.12 }
   );
   reveals.forEach((r) => io.observe(r));
-
-  function revealCheck() {
-    reveals.forEach((r) => {
-      const rect = r.getBoundingClientRect();
-      if (rect.top < window.innerHeight) r.classList.add("is-visible");
-    });
-  }
 
   /* ---------- 6. Salin alamat ---------- */
   const copyBtn = document.getElementById("copyAddressBtn");

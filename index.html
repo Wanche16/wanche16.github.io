@@ -14,8 +14,8 @@
 </head>
 <body>
 
-  <!-- ============ COVER / SAMPUL ============ -->
-  <section id="cover" class="cover">
+  <!-- ============ BAGIAN PEMBUKA (bekas sampul, kini langsung scroll) ============ -->
+  <header class="cover cover--static">
     <div class="cover__overlay" aria-hidden="true"></div>
     <div class="cover__content">
       <p class="eyebrow">The Wedding of</p>
@@ -27,14 +27,9 @@
         <p class="cover__guest-name" id="guestName">Tamu Undangan</p>
       </div>
 
-      <button id="openBtn" class="btn btn--primary">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <path d="M4 7l8 6 8-6M4 7v10h16V7M4 7l8-4 8 4" />
-        </svg>
-        Buka Undangan
-      </button>
+      <p class="cover__scroll" aria-hidden="true">&#8595;&nbsp; Gulir ke bawah</p>
     </div>
-  </section>
+  </header>
 
   <!-- ============ MUSIK LATAR ============ -->
   <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
@@ -48,12 +43,10 @@
   </button>
 
   <!-- ============ ISI UNDANGAN ============ -->
-  <main id="mainContent" class="main" aria-hidden="true">
+  <main id="mainContent" class="main">
 
     <!-- HERO -->
     <section class="hero reveal">
-      <img class="hero__photo" src="bg-couple.jpg"
-           alt="Siluet Anke dan Iwan di depan bulan biru" loading="lazy" />
       <div class="hero__inner">
         <p class="lead">
           Dengan segala kerendahan hati dan ungkapan syukur atas karunia Allah SWT,

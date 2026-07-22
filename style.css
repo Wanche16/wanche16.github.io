@@ -164,7 +164,7 @@ body.locked { overflow: hidden; height: 100dvh; }
   justify-content: flex-end;
   align-items: center;
   background:
-    #000 url("bg-couple.jpg") no-repeat center 22% / cover;
+    #000 url("bg-couple.png") no-repeat center 22% / cover;
   text-align: center;
   padding: 2rem 1.5rem max(6vh, 2.5rem);
   transition: opacity 0.9s ease, visibility 0.9s ease;

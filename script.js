@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // abaikan gesture pada tombol musik sendiri agar tidak
     // bentrok dengan handler klik putar/jeda di bawah
     if (e && e.target && musicToggle.contains(e.target)) return;
-    music.volume = 0.4;
+    music.volume = 0.2;
     music
       .play()
       .then(() => {

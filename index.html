@@ -3,8 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Undangan Pernikahan — Keana Alya &amp; Wanche</title>
+  <title>Undangan Pernikahan Keana &amp; Wanche</title>
   <meta name="description" content="Undangan Pernikahan Keana Alya & Wanche — Sabtu, 8 Agustus 2026, Bandung." />
+
+  <!-- Open Graph (preview saat link dibagikan via WhatsApp, dll.)
+       PENTING: ganti "https://username.github.io/Undangan-Pernikahan/"
+       dengan URL asli tempat undangan ini di-hosting.
+       og:image WAJIB berupa URL absolut (bukan path relatif). -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="The Wedding of Keana & Wanche" />
+  <meta property="og:description" content="Hari, 00 Bulan 2026 · Kedai Waka Waka, Kota Bandung. Kami mengundang Saudara/i untuk hadir dan memberikan doa restu." />
+  <meta property="og:url" content="https://username.github.io/Undangan-Pernikahan/" />
+  <meta property="og:image" content="https://username.github.io/Undangan-Pernikahan/bg-couple.jpg" />
+  <meta property="og:image:width" content="1080" />
+  <meta property="og:image:height" content="1440" />
+  <meta property="og:locale" content="id_ID" />
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Wedding of Keana & Wanche" />
+  <meta name="twitter:description" content="Hari, 00 Bulan 2026 · Kedai Waka Waka, Kota Bandung" />
+  <meta name="twitter:image" content="https://username.github.io/Undangan-Pernikahan/bg-couple.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,16 +33,98 @@
 </head>
 <body>
 
+  <!-- ===== Definisi ornamen bunga (dipakai ulang lewat <use>) ===== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <!-- bunga biru (cornflower) -->
+      <g id="bloom-blue">
+        <g fill="#8fb4ea" opacity="0.95">
+          <ellipse rx="4.2" ry="11" transform="rotate(0)"   cy="-9"/>
+          <ellipse rx="4.2" ry="11" transform="rotate(45)"  cy="-9"/>
+          <ellipse rx="4.2" ry="11" transform="rotate(90)"  cy="-9"/>
+          <ellipse rx="4.2" ry="11" transform="rotate(135)" cy="-9"/>
+          <ellipse rx="4.2" ry="11" transform="rotate(180)" cy="-9"/>
+          <ellipse rx="4.2" ry="11" transform="rotate(225)" cy="-9"/>
+          <ellipse rx="4.2" ry="11" transform="rotate(270)" cy="-9"/>
+          <ellipse rx="4.2" ry="11" transform="rotate(315)" cy="-9"/>
+        </g>
+        <g fill="#c7dcf7" opacity="0.9">
+          <ellipse rx="2.6" ry="6.5" transform="rotate(22)"  cy="-5.5"/>
+          <ellipse rx="2.6" ry="6.5" transform="rotate(112)" cy="-5.5"/>
+          <ellipse rx="2.6" ry="6.5" transform="rotate(202)" cy="-5.5"/>
+          <ellipse rx="2.6" ry="6.5" transform="rotate(292)" cy="-5.5"/>
+        </g>
+        <circle r="3.4" fill="#16305e"/>
+        <circle r="1.2" fill="#f0d795"/>
+      </g>
+
+      <!-- bunga putih -->
+      <g id="bloom-white">
+        <g fill="#edf3fc" opacity="0.95">
+          <ellipse rx="3.4" ry="8.5" transform="rotate(0)"   cy="-7"/>
+          <ellipse rx="3.4" ry="8.5" transform="rotate(60)"  cy="-7"/>
+          <ellipse rx="3.4" ry="8.5" transform="rotate(120)" cy="-7"/>
+          <ellipse rx="3.4" ry="8.5" transform="rotate(180)" cy="-7"/>
+          <ellipse rx="3.4" ry="8.5" transform="rotate(240)" cy="-7"/>
+          <ellipse rx="3.4" ry="8.5" transform="rotate(300)" cy="-7"/>
+        </g>
+        <circle r="2.8" fill="#1b3468"/>
+        <circle r="1" fill="#f0d795"/>
+      </g>
+
+      <!-- sepasang daun emas (mengikuti currentColor) -->
+      <g id="leaf-gold" fill="currentColor" opacity="0.85">
+        <ellipse rx="2.2" ry="7" transform="rotate(-35)" cy="-6"/>
+        <ellipse rx="2.2" ry="7" transform="rotate(35)"  cy="-6"/>
+      </g>
+
+      <!-- pembatas: sulur + rangkaian bunga -->
+      <g id="floral-row">
+        <path d="M6 30 C 60 12, 180 48, 234 30" fill="none"
+              stroke="currentColor" stroke-width="1.2" opacity="0.7"/>
+        <use href="#leaf-gold" transform="translate(48 24) rotate(-14)"/>
+        <use href="#leaf-gold" transform="translate(192 36) rotate(160)"/>
+        <use href="#bloom-white" transform="translate(78 27) scale(0.9)"/>
+        <use href="#bloom-blue"  transform="translate(120 30)"/>
+        <use href="#bloom-white" transform="translate(162 33) scale(0.9)"/>
+        <circle cx="24"  cy="26" r="2" fill="currentColor" opacity="0.7"/>
+        <circle cx="216" cy="34" r="2" fill="currentColor" opacity="0.7"/>
+      </g>
+    </defs>
+  </svg>
+
   <!-- ============ BAGIAN PEMBUKA (bekas sampul, kini langsung scroll) ============ -->
   <header class="cover cover--static">
     <div class="cover__overlay" aria-hidden="true"></div>
+
+    <!-- wreath bunga pojok kiri atas, menggemakan poster -->
+    <div class="cover__floral" aria-hidden="true">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 186 C 10 110, 60 30, 150 14" fill="none"
+              stroke="currentColor" stroke-width="1.4" opacity="0.75"/>
+        <path d="M30 178 C 34 120, 78 56, 148 40" fill="none"
+              stroke="currentColor" stroke-width="1" opacity="0.5"/>
+        <use href="#leaf-gold" transform="translate(38 152) rotate(-60) scale(1.2)"/>
+        <use href="#leaf-gold" transform="translate(96 60) rotate(30) scale(1.1)"/>
+        <use href="#leaf-gold" transform="translate(140 26) rotate(75)"/>
+        <use href="#bloom-blue"  transform="translate(22 168) scale(1.6)"/>
+        <use href="#bloom-white" transform="translate(52 118) scale(1.15)"/>
+        <use href="#bloom-blue"  transform="translate(76 84) scale(1.3)"/>
+        <use href="#bloom-white" transform="translate(116 48) scale(1.05)"/>
+        <use href="#bloom-blue"  transform="translate(156 22) scale(0.95)"/>
+        <circle cx="40" cy="140" r="2.4" fill="currentColor" opacity="0.7"/>
+        <circle cx="98" cy="70"  r="2.4" fill="currentColor" opacity="0.7"/>
+        <circle cx="138" cy="38" r="2"   fill="currentColor" opacity="0.7"/>
+      </svg>
+    </div>
+
     <div class="cover__content">
       <p class="eyebrow">The Wedding of</p>
       <h1 class="cover__names">Keana <span class="amp">&amp;</span> Wanche</h1>
-      <p class="cover__date">Sabtu, 8 Agustus 2026</p>
+      <p class="cover__date">Hari, 00 Bulan 2026</p>
 
       <div class="cover__guest">
-        <p class="cover__guest-label">Kepada Yth. Saudara dan Saudari</p>
+        <p class="cover__guest-label">Kepada Yth. Saudara/i</p>
         <p class="cover__guest-name" id="guestName">Tamu Undangan</p>
       </div>
 
@@ -50,11 +151,17 @@
       <div class="hero__inner">
         <p class="lead">
           Dengan segala kerendahan hati dan ungkapan syukur atas karunia Allah SWT,
-          kami mengundang Saudara dan Saudari untuk menghadiri
+          kami mengundang Saudara/i untuk menghadiri
           Resepsi Pernikahan kami:
         </p>
       </div>
     </section>
+
+    <div class="floral-divider reveal" aria-hidden="true">
+      <svg viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg">
+        <use href="#floral-row"/>
+      </svg>
+    </div>
 
     <!-- MEMPELAI -->
     <section class="couple">
@@ -76,7 +183,7 @@
     <!-- TANGGAL + COUNTDOWN -->
     <section class="save-date reveal">
       <p class="lead">Yang akan diselenggarakan pada:</p>
-      <p class="save-date__script">Sabtu, 8 Agustus 2026</p>
+      <p class="save-date__script">Hari, 00 Bulan 2026</p>
 
       <div class="countdown" id="countdown" role="timer" aria-label="Hitung mundur menuju hari pernikahan">
         <div class="countdown__item"><span id="cdDays">0</span><small>Hari</small></div>
@@ -91,14 +198,20 @@
       <article class="event-card reveal">
         <h3 class="event-card__title">Akad Nikah</h3>
         <p class="event-card__time">11.00 WIB</p>
-        <p class="event-card__note">Sabtu, 8 Agustus 2026</p>
+        <p class="event-card__note">Hari, 00 Bulan 2026</p>
       </article>
       <article class="event-card reveal">
         <h3 class="event-card__title">Resepsi Pernikahan</h3>
         <p class="event-card__time">12.00 – 14.00 WIB</p>
-        <p class="event-card__note">Sabtu, 8 Agustus 2026</p>
+        <p class="event-card__note">Hari, 00 Bulan 2026</p>
       </article>
     </section>
+
+    <div class="floral-divider reveal" aria-hidden="true">
+      <svg viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg">
+        <use href="#floral-row"/>
+      </svg>
+    </div>
 
     <!-- LOKASI -->
     <section class="venue reveal">
@@ -123,14 +236,14 @@
       <p class="eyebrow">Tanda Kasih</p>
       <h3 class="gift__title">Ungkapan Tanda Kasih</h3>
       <p class="lead gift__lead">
-        Doa restu Saudara dan Saudari merupakan hadiah terindah bagi kami.
+        Doa restu Saudara/i merupakan hadiah terindah bagi kami.
         Namun apabila memberi adalah ungkapan tanda kasih, kami menerimanya
         dengan penuh rasa syukur melalui:
       </p>
 
       <div class="gift__grid">
         <!-- GANTI: nama bank, nomor rekening, dan nama pemilik rekening -->
-       <!-- <article class="gift-card">
+        <!-- <article class="gift-card">
           <p class="gift-card__bank">Bank BCA</p>
           <p class="gift-card__number" id="rek1">5140596657</p>
           <p class="gift-card__owner">a.n. Anke Robiatul Adawiyah</p>
@@ -179,19 +292,25 @@
       <ul class="wishes__list" id="wishList"></ul>
     </section>
 
+    <div class="floral-divider reveal" aria-hidden="true">
+      <svg viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg">
+        <use href="#floral-row"/>
+      </svg>
+    </div>
+
     <!-- PENUTUP -->
     <section class="closing reveal">
       <p class="lead">
         Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila
-        Saudara dan Saudari berkenan hadir untuk memberikan doa restu.
+        Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.
       </p>
       <p class="closing__thanks">Wassalamu’alaikum Warahmatullahi Wabarakatuh</p>
-      <p class="closing__names">Keana <span class="amp">&amp;</span> Wanche</p>
-      <p class="closing__families">Keluarga Besar Keana Alya &amp; Keluarga Besar Wanche </p>
+      <p class="closing__names">Anke <span class="amp">&amp;</span> Iwan</p>
+     <!--  <p class="closing__families">Keluarga Besar Hilman A. (Alm) &amp; Euis S. · Keluarga Besar Ngadiman &amp; Sunanti L.</p> -->
     </section>
 
     <footer class="footer">
-      <p>Sabtu, 8 Agustus 2026 · Kota Bandung</p>
+      <p>Hari, 00 Bulan 2026 · Kota Bandung</p>
     </footer>
   </main>
 

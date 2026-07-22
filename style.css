@@ -1,16 +1,21 @@
 /* ==========================================================
    Undangan Pernikahan — Anke & Iwan
-   Tema: "Moonlight" — bulan biru di langit malam (sesuai poster)
+   Tema: "Royal Moonlight" — biru royal, aksen emas,
+   pola damask & bunga watercolor (mengikuti poster)
    ========================================================== */
 
 :root {
-  --night:        #04070d;   /* latar utama, hampir hitam kebiruan */
-  --night-soft:   #0a1220;   /* kartu / panel */
-  --moon:         #59b7ff;   /* biru bulan */
-  --moon-bright:  #a8dcff;   /* highlight teks biru terang */
-  --ice:          #d8ecff;   /* teks utama */
-  --mist:         #7d90a8;   /* teks sekunder */
-  --line:         rgba(120, 180, 255, 0.18);
+  --night:        #0a1c4e;   /* biru royal gelap: latar utama */
+  --night-soft:   #10265e;   /* kartu / panel */
+  --night-deep:   #061237;   /* bayangan / tepi */
+  --moon:         #6fb6ff;   /* biru cahaya bulan (glow siluet) */
+  --moon-bright:  #b8dcff;   /* biru terang */
+  --gold:         #d9b45c;   /* emas utama (nama, angka) */
+  --gold-bright:  #f0d795;   /* emas terang (highlight) */
+  --ice:          #eef4ff;   /* teks utama */
+  --mist:         #a9bade;   /* teks sekunder */
+  --line:         rgba(217, 180, 92, 0.28);   /* garis emas halus */
+  --line-blue:    rgba(140, 180, 255, 0.16);
 
   --font-display: "Cormorant Garamond", "Times New Roman", serif;
   --font-script:  "Pinyon Script", cursive;
@@ -22,13 +27,26 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--night);
+  background:
+    radial-gradient(120% 90% at 50% 0%, #16307a 0%, var(--night) 55%, var(--night-deep) 100%)
+    fixed var(--night);
   color: var(--ice);
   font-family: var(--font-body);
   font-weight: 300;
   line-height: 1.7;
   letter-spacing: 0.02em;
   overflow-x: hidden;
+}
+
+/* Pola damask/batik samar di seluruh latar (seperti poster) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%238fb0ff' stroke-opacity='0.07' stroke-width='2'%3E%3Cpath d='M30 110c0-40 30-55 55-45-20 8-28 30-15 45 13 15 35 10 40-8 6 22-12 40-35 38-26-2-45-12-45-30z'/%3E%3Cpath d='M190 110c0 40-30 55-55 45 20-8 28-30 15-45-13-15-35-10-40 8-6-22 12-40 35-38 26 2 45 12 45 30z'/%3E%3Cpath d='M110 18c18 0 26 14 20 26-4-9-16-12-22-4-6 8-2 18 8 20-11 4-24-4-24-18 0-15 8-24 18-24z'/%3E%3Cpath d='M110 202c-18 0-26-14-20-26 4 9 16 12 22 4 6-8 2-18-8-20 11-4 24 4 24 18 0 15-8 24-18 24z'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 body.locked { overflow: hidden; height: 100dvh; }
@@ -39,7 +57,7 @@ body.locked { overflow: hidden; height: 100dvh; }
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.35em;
-  color: var(--mist);
+  color: var(--gold);
 }
 
 .lead {
@@ -50,7 +68,7 @@ body.locked { overflow: hidden; height: 100dvh; }
 
 .amp {
   font-family: var(--font-script);
-  color: var(--moon);
+  color: var(--gold);
 }
 
 .btn {
@@ -69,20 +87,20 @@ body.locked { overflow: hidden; height: 100dvh; }
 }
 
 .btn:focus-visible {
-  outline: 2px solid var(--moon-bright);
+  outline: 2px solid var(--gold-bright);
   outline-offset: 3px;
 }
 
 .btn--primary {
-  border: 1px solid var(--moon);
-  background: linear-gradient(180deg, rgba(89, 183, 255, 0.22), rgba(89, 183, 255, 0.08));
-  color: var(--moon-bright);
-  box-shadow: 0 0 24px rgba(89, 183, 255, 0.18);
+  border: 1px solid var(--gold);
+  background: linear-gradient(180deg, rgba(217, 180, 92, 0.28), rgba(217, 180, 92, 0.10));
+  color: var(--gold-bright);
+  box-shadow: 0 0 24px rgba(217, 180, 92, 0.20);
 }
 
 .btn--primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 36px rgba(89, 183, 255, 0.35);
+  box-shadow: 0 0 36px rgba(217, 180, 92, 0.38);
 }
 
 .btn--ghost {
@@ -91,14 +109,14 @@ body.locked { overflow: hidden; height: 100dvh; }
   color: var(--ice);
 }
 
-.btn--ghost:hover { border-color: var(--moon); color: var(--moon-bright); }
+.btn--ghost:hover { border-color: var(--gold); color: var(--gold-bright); }
 
 /* ---------- langit berbintang (dibuat oleh JS) ---------- */
 
 .star {
   position: fixed;
   border-radius: 50%;
-  background: var(--moon-bright);
+  background: var(--gold-bright);
   opacity: 0.5;
   pointer-events: none;
   z-index: 0;
@@ -106,9 +124,34 @@ body.locked { overflow: hidden; height: 100dvh; }
 }
 
 @keyframes twinkle {
-  from { opacity: 0.15; }
-  to   { opacity: 0.7; }
+  from { opacity: 0.12; }
+  to   { opacity: 0.6; }
 }
+
+/* ---------- ornamen bunga (SVG di index.html) ---------- */
+
+.floral-divider {
+  width: min(70vw, 300px);
+  margin: 0 auto;
+  display: block;
+  color: var(--gold);           /* vine & daun mengikuti warna ini */
+  opacity: 0.9;
+}
+
+.floral-divider svg { width: 100%; height: auto; display: block; }
+
+.cover__floral {
+  position: absolute;
+  top: -1.2rem;
+  left: -1.6rem;
+  width: min(52vw, 340px);
+  z-index: 1;
+  color: var(--gold);
+  opacity: 0.95;
+  pointer-events: none;
+}
+
+.cover__floral svg { width: 100%; height: auto; display: block; }
 
 /* ---------- COVER ---------- */
 
@@ -120,11 +163,8 @@ body.locked { overflow: hidden; height: 100dvh; }
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  /* Foto asli: bulan berada di ~sepertiga atas frame.
-     background-position "center 22%" menjaga bulan tetap terlihat
-     di layar landscape/desktop tanpa terpotong. */
   background:
-    #000 url("bg-couple.png") no-repeat center 22% / cover;
+    #000 url("bg-couple.jpg") no-repeat center 22% / cover;
   text-align: center;
   padding: 2rem 1.5rem max(6vh, 2.5rem);
   transition: opacity 0.9s ease, visibility 0.9s ease;
@@ -132,7 +172,6 @@ body.locked { overflow: hidden; height: 100dvh; }
 
 .cover.is-open { opacity: 0; visibility: hidden; pointer-events: none; }
 
-/* Varian statis: pembuka jadi bagian atas halaman, langsung bisa di-scroll */
 .cover--static {
   position: relative;
   inset: auto;
@@ -154,16 +193,16 @@ body.locked { overflow: hidden; height: 100dvh; }
   50%      { transform: translateY(6px); opacity: 1; }
 }
 
-/* Gradasi agar teks terbaca di area bawah & menyatu dengan halaman */
+/* Gradasi bawah menyatu ke biru royal halaman */
 .cover__overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.45) 0%,
-    rgba(0, 0, 0, 0) 26%,
-    rgba(0, 0, 0, 0) 52%,
-    rgba(4, 7, 13, 0.82) 78%,
+    rgba(4, 10, 30, 0.5) 0%,
+    rgba(4, 10, 30, 0) 26%,
+    rgba(4, 10, 30, 0) 52%,
+    rgba(10, 28, 78, 0.85) 78%,
     var(--night) 100%
   );
   pointer-events: none;
@@ -184,8 +223,8 @@ body.locked { overflow: hidden; height: 100dvh; }
   font-family: var(--font-script);
   font-weight: 400;
   font-size: clamp(3rem, 10vw, 4.6rem);
-  color: var(--moon-bright);
-  text-shadow: 0 0 30px rgba(89, 183, 255, 0.5);
+  color: var(--gold-bright);
+  text-shadow: 0 0 30px rgba(217, 180, 92, 0.55), 0 2px 4px rgba(0, 0, 0, 0.5);
   margin: 0.4rem 0 0.2rem;
 }
 
@@ -204,7 +243,7 @@ body.locked { overflow: hidden; height: 100dvh; }
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--moon-bright);
+  color: var(--gold-bright);
   margin-top: 0.2rem;
 }
 
@@ -225,37 +264,26 @@ section { padding: 4.5rem 0; }
 
 .hero { padding-top: 6rem; position: relative; }
 
-.hero__photo {
-  display: block;
-  width: min(78vw, 300px);
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  object-position: center 30%;
-  margin: 0 auto 2.5rem;
-  border-radius: 50% / 38%;              /* lengkung oval, menggemakan bulan */
-  border: 1px solid rgba(89, 183, 255, 0.25);
-  box-shadow:
-    0 0 40px rgba(89, 183, 255, 0.35),
-    0 0 120px rgba(89, 183, 255, 0.18);
-}
-
 /* MEMPELAI */
 
 .couple__card {
   padding: 2.4rem 1.6rem;
   border: 1px solid var(--line);
   border-radius: 1rem;
-  background: linear-gradient(180deg, rgba(89, 183, 255, 0.05), transparent 70%);
+  background:
+    linear-gradient(180deg, rgba(217, 180, 92, 0.06), transparent 45%),
+    linear-gradient(180deg, rgba(140, 180, 255, 0.06), var(--night-soft) 70%);
+  box-shadow: inset 0 1px 0 rgba(240, 215, 149, 0.12);
 }
 
 .couple__name {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(1.7rem, 5.5vw, 2.3rem);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--moon-bright);
-  text-shadow: 0 0 22px rgba(89, 183, 255, 0.35);
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(2rem, 7vw, 2.7rem);
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--gold-bright);
+  text-shadow: 0 0 22px rgba(217, 180, 92, 0.4);
   margin: 0.8rem 0 0.6rem;
 }
 
@@ -264,17 +292,20 @@ section { padding: 4.5rem 0; }
 .couple__amp {
   font-family: var(--font-script);
   font-size: 3rem;
-  color: var(--moon);
+  color: var(--gold);
   padding: 1.4rem 0;
 }
 
 /* SAVE THE DATE */
 
 .save-date__script {
-  font-family: var(--font-script);
-  font-size: clamp(2.4rem, 8vw, 3.6rem);
-  color: var(--moon-bright);
-  text-shadow: 0 0 26px rgba(89, 183, 255, 0.45);
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: clamp(1.6rem, 6vw, 2.4rem);
+  color: var(--gold-bright);
+  text-shadow: 0 0 26px rgba(217, 180, 92, 0.45);
   margin: 1rem 0 2.2rem;
 }
 
@@ -290,7 +321,7 @@ section { padding: 4.5rem 0; }
   padding: 0.9rem 0.6rem;
   border: 1px solid var(--line);
   border-radius: 0.8rem;
-  background: var(--night-soft);
+  background: linear-gradient(180deg, rgba(140, 180, 255, 0.05), var(--night-soft));
 }
 
 .countdown__item span {
@@ -298,7 +329,7 @@ section { padding: 4.5rem 0; }
   font-family: var(--font-display);
   font-size: 1.8rem;
   font-weight: 600;
-  color: var(--moon-bright);
+  color: var(--gold-bright);
   line-height: 1.2;
 }
 
@@ -326,6 +357,7 @@ section { padding: 4.5rem 0; }
   border: 1px solid var(--line);
   border-radius: 1rem;
   background: var(--night-soft);
+  box-shadow: inset 0 1px 0 rgba(240, 215, 149, 0.1);
 }
 
 .event-card__title {
@@ -333,13 +365,14 @@ section { padding: 4.5rem 0; }
   font-weight: 500;
   font-size: 1.35rem;
   letter-spacing: 0.08em;
+  color: var(--ice);
 }
 
 .event-card__time {
   font-family: var(--font-display);
   font-size: 1.7rem;
   font-weight: 600;
-  color: var(--moon-bright);
+  color: var(--gold-bright);
   margin: 0.5rem 0 0.3rem;
 }
 
@@ -353,7 +386,7 @@ section { padding: 4.5rem 0; }
   font-weight: 500;
   letter-spacing: 0.06em;
   margin: 0.6rem 0 0.4rem;
-  color: var(--moon-bright);
+  color: var(--gold-bright);
 }
 
 .venue__address { color: var(--mist); margin-bottom: 1.6rem; }
@@ -372,7 +405,7 @@ section { padding: 4.5rem 0; }
   font-size: 1.6rem;
   font-weight: 500;
   margin: 0.6rem 0 1rem;
-  color: var(--moon-bright);
+  color: var(--gold-bright);
 }
 
 .gift__lead { margin-bottom: 2rem; color: var(--mist); }
@@ -394,7 +427,7 @@ section { padding: 4.5rem 0; }
   padding: 1.8rem 1.4rem;
   border: 1px solid var(--line);
   border-radius: 1rem;
-  background: linear-gradient(180deg, rgba(89, 183, 255, 0.07), var(--night-soft) 70%);
+  background: linear-gradient(180deg, rgba(217, 180, 92, 0.07), var(--night-soft) 70%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -405,7 +438,7 @@ section { padding: 4.5rem 0; }
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.28em;
-  color: var(--mist);
+  color: var(--gold);
 }
 
 .gift-card__number {
@@ -413,7 +446,7 @@ section { padding: 4.5rem 0; }
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: 0.14em;
-  color: var(--moon-bright);
+  color: var(--gold-bright);
 }
 
 .gift-card__owner { font-size: 0.85rem; color: var(--mist); }
@@ -426,10 +459,11 @@ section { padding: 4.5rem 0; }
   width: min(60vw, 220px);
   aspect-ratio: 1;
   object-fit: contain;
-  background: #fff;               /* QRIS wajib berlatar terang agar terbaca */
+  background: #fff;
   border-radius: 0.8rem;
   padding: 0.6rem;
   margin: 0.6rem 0 0.4rem;
+  border: 1px solid var(--line);
 }
 
 .gift-card__qr-missing {
@@ -448,6 +482,7 @@ section { padding: 4.5rem 0; }
   font-size: 1.6rem;
   font-weight: 500;
   margin: 0.6rem 0 1.6rem;
+  color: var(--ice);
 }
 
 .wishes__form {
@@ -467,7 +502,7 @@ section { padding: 4.5rem 0; }
   font-size: 0.95rem;
   color: var(--ice);
   background: var(--night-soft);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-blue);
   border-radius: 0.6rem;
   resize: vertical;
 }
@@ -478,13 +513,13 @@ section { padding: 4.5rem 0; }
 .wishes__form input:focus,
 .wishes__form select:focus,
 .wishes__form textarea:focus {
-  outline: 2px solid var(--moon);
+  outline: 2px solid var(--gold);
   outline-offset: 1px;
 }
 
 .wishes__form .btn { justify-content: center; }
 
-.wishes__hint { font-size: 0.8rem; color: var(--moon-bright); min-height: 1.2em; text-align: center; }
+.wishes__hint { font-size: 0.8rem; color: var(--gold-bright); min-height: 1.2em; text-align: center; }
 
 .wishes__list {
   list-style: none;
@@ -497,14 +532,14 @@ section { padding: 4.5rem 0; }
 
 .wishes__list li {
   padding: 1rem 1.2rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-blue);
   border-radius: 0.8rem;
-  background: linear-gradient(180deg, rgba(89, 183, 255, 0.06), transparent);
+  background: linear-gradient(180deg, rgba(140, 180, 255, 0.06), transparent);
 }
 
 .wishes__list .who {
   font-weight: 500;
-  color: var(--moon-bright);
+  color: var(--gold-bright);
   font-size: 0.95rem;
 }
 
@@ -530,8 +565,8 @@ section { padding: 4.5rem 0; }
 .closing__names {
   font-family: var(--font-script);
   font-size: 2.6rem;
-  color: var(--moon-bright);
-  text-shadow: 0 0 24px rgba(89, 183, 255, 0.4);
+  color: var(--gold-bright);
+  text-shadow: 0 0 24px rgba(217, 180, 92, 0.45);
   margin: 0.8rem 0 0.6rem;
 }
 
@@ -558,21 +593,21 @@ section { padding: 4.5rem 0; }
   display: grid;
   place-items: center;
   border-radius: 50%;
-  border: 1px solid var(--moon);
-  background: rgba(10, 18, 32, 0.85);
-  color: var(--moon-bright);
+  border: 1px solid var(--gold);
+  background: rgba(10, 28, 78, 0.9);
+  color: var(--gold-bright);
   cursor: pointer;
-  box-shadow: 0 0 20px rgba(89, 183, 255, 0.3);
+  box-shadow: 0 0 20px rgba(217, 180, 92, 0.3);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .music-toggle:hover {
   transform: scale(1.08);
-  box-shadow: 0 0 30px rgba(89, 183, 255, 0.45);
+  box-shadow: 0 0 30px rgba(217, 180, 92, 0.45);
 }
 
 .music-toggle:focus-visible {
-  outline: 2px solid var(--moon-bright);
+  outline: 2px solid var(--gold-bright);
   outline-offset: 3px;
 }
 
@@ -585,8 +620,8 @@ section { padding: 4.5rem 0; }
 }
 
 @keyframes pulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(89, 183, 255, 0.3); }
-  50%      { box-shadow: 0 0 34px rgba(89, 183, 255, 0.55); }
+  0%, 100% { box-shadow: 0 0 20px rgba(217, 180, 92, 0.3); }
+  50%      { box-shadow: 0 0 34px rgba(217, 180, 92, 0.55); }
 }
 
 /* ---------- reveal on scroll ---------- */
